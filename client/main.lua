@@ -1,7 +1,6 @@
 RegisterNetEvent('pu_billing:client:bill', function()
     PlayerData = QBX.PlayerData
-    local onDuty = PlayerData.job.onduty
-    if onDuty then
+    if PlayerData.job.onduty and PlayerData.job.name ~= "unemployed" then
         local input = lib.inputDialog('Billing Portal', {'Session ID', 'Amount'})
         if not input then return end
         TriggerServerEvent('pu_billing:server:sendBill', input[1], input[2])
