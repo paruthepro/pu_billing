@@ -35,8 +35,8 @@ RegisterNetEvent("pu_billing:server:reply", function(token, accepted)
             exports.qbx_core:Notify(source, "Not enough money", "error")
             accepted = false
         else
-            target.Functions.RemoveMoney("bank", bill.amount, bill.job)
-            exports["Renewed-Banking"]:addAccountMoney(bill.job, bill.amount)
+            exports['Renewed-Banking']:handleTransaction(target.PlayerData.citizenid, 'Personal Account'.." / "..target.PlayerData.citizenid, bill.amount, bill.job.." - "..bill.name, bill.job, bill.job, 'withdraw')
+            exports['Renewed-Banking']:handleTransaction(bill.job, bill.job, bill.amount, bill.job, bill.name, bill.job, 'deposit')
         end
     end
     TriggerClientEvent("pu_billing:client:receiveBillResponse", bill.from, accepted, bill.name, bill.job, bill.amount)
