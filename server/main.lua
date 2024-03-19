@@ -6,7 +6,7 @@ RegisterNetEvent("pu_billing:server:sendBill", function(target, amount)
     local name = player.PlayerData.charinfo.firstname.." "..player.PlayerData.charinfo.lastname
     local job = player.PlayerData.job.name
     waitingBills[token] = {
-        amount = amount,
+        amount = tonumber(amount),
         from = source,
         to = target,
         job = job,
