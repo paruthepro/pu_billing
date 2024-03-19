@@ -3,9 +3,8 @@ local waitingBills = {}
 RegisterNetEvent("pu_billing:server:sendBill", function(target, amount)
     local token = ("%s_%s"):format(target, os.time())
     local player = exports.qbx_core:GetPlayer(source)
+    local name = player.PlayerData.charinfo.firstname.." "..player.PlayerData.charinfo.lastname
     local job = player.PlayerData.job.name
-    local targetPlayer = exports.qbx_core:GetPlayer(source)
-    local name = targetPlayer.PlayerData.charinfo.firstname.." "..targetPlayer.PlayerData.charinfo.lastname
     waitingBills[token] = {
         amount = amount,
         from = source,
@@ -23,7 +22,7 @@ RegisterNetEvent("pu_billing:server:reply", function(token, accepted)
         local target = exports.qbx_core:GetPlayer(source)
         local targetBalance = target.Functions.GetMoney('bank')
         if targetBalance < bill.amount then
-            exports.core:Notify(source, "Not enough money", "error")
+            exports.qbx_core:Notify(source, "Not enough money", "error")
             accepted = false
         else
             target.Functions.RemoveMoney("bank", bill.amount, bill.job)
