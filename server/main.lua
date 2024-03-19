@@ -1,12 +1,22 @@
 local waitingBills = {}
 
 RegisterNetEvent("pu_billing:server:sendBill", function(target, amount)
+    target = tonumber(target)
+    amount = tonumber(amount)
+    if not target or target <= 0 then return end
+    if target == source then return end
+    if not amount or amount <= 0 then return end
+
     local token = ("%s_%s"):format(target, os.time())
     local player = exports.qbx_core:GetPlayer(source)
-    local name = player.PlayerData.charinfo.firstname.." "..player.PlayerData.charinfo.lastname
+    if not player.PlayerData.job.onduty then return end
     local job = player.PlayerData.job.name
+    if job == "unemployed" then return end
+    
+    local targetPlayer = exports.qbx_core:GetPlayer(source)
+    local name = ("%s %s"):format(targetPlayer.PlayerData.charinfo.firstname, targetPlayer.PlayerData.charinfo.lastname)
     waitingBills[token] = {
-        amount = tonumber(amount),
+        amount = amount,
         from = source,
         to = target,
         job = job,
