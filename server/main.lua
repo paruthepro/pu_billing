@@ -3,8 +3,9 @@ local waitingBills = {}
 RegisterNetEvent("pu_billing:server:sendBill", function(target, amount)
     local token = ("%s_%s"):format(target, os.time())
     local player = exports.qbx_core:GetPlayer(source)
-    local name = player.PlayerData.charinfo.firstname.." "..player.PlayerData.charinfo.lastname
     local job = player.PlayerData.job.name
+    local targetPlayer = exports.qbx_core:GetPlayer(source)
+    local name = targetPlayer.PlayerData.charinfo.firstname.." "..targetPlayer.PlayerData.charinfo.lastname
     waitingBills[token] = {
         amount = amount,
         from = source,

@@ -28,23 +28,12 @@ RegisterNetEvent('pu_billing:client:receiveBill', function(amount, job, token)
 end)
 
 RegisterNetEvent('pu_billing:client:receiveBillResponse', function(accepted, name, job, amount)
-    if accepted then
-        exports["npwd"]:createSystemNotification({
-            uniqId = "Pu_billing_paid",
-            content = ("Bill paid by %s at %s for $%s"):format(name, job, amount),
-            secondaryTitle = "from",
-            keepOpen = false,
-            duration = Config.NotificationLength,
-            controls = false,
-        })
-    else
-        exports["npwd"]:createSystemNotification({
-            uniqId = "Pu_billing_rejected",
-            content = ("Bill rejected by %s"):format(name),
-            secondaryTitle = ("from %s"):format(job),
-            keepOpen = false,
-            duration = Config.NotificationLength,
-            controls = false,
-        })
-    end
+    exports["npwd"]:createSystemNotification({
+        uniqId = accepted and "Pu_billing_paid" or "Pu_billing_rejected",
+        content = accepted and ("Bill paid by %s at %s for $%s"):format(name, job, amount) or ("Bill rejected by %s"):format(name),
+        secondaryTitle = ("from %s"):format(job),
+        keepOpen = false,
+        duration = Config.NotificationLength,
+        controls = false,
+    })
 end)
