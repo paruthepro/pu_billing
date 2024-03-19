@@ -5,7 +5,6 @@ RegisterNetEvent('pu_billing:server:payment', function(biller, amount, job, bill
         return exports.core:Notify(source, 'Not enough money', 'error')
     end
     exports['Renewed-Banking']:addAccountMoney(job, amount, billed)
-    Wait(100)
     TriggerClientEvent('pu_billing:client:paid', biller.source, job, buyname, amount)
 end)
 

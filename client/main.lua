@@ -7,6 +7,7 @@ RegisterNetEvent('pu_billing:client:bill', function()
         local input = lib.inputDialog('Billing Portal', {'Session ID', 'Amount'})
         if not input then return end
         json.encode(input)
+        print(PlayerData.source)
     TriggerServerEvent('pu_billing:server:convert', input[1], input[2], Job, billername, PlayerData, PlayerData)
     else
         exports.core:Notify('You must be on duty to do that!', 'ban')
@@ -30,7 +31,7 @@ RegisterNetEvent('pu_billing:client:sendbill', function(amount, Job, billername,
       })
 end)
 RegisterNetEvent('pu_billing:client:rejected', function(name, job)
-    Wait(1000)
+    Wait(2500)
     exports["npwd"]:createSystemNotification({
         uniqId = "Pu_billing_rejected",
         content = "Bill rejected by".." "..name,
@@ -41,7 +42,7 @@ RegisterNetEvent('pu_billing:client:rejected', function(name, job)
       })
 end)
 RegisterNetEvent('pu_billing:client:paid', function(job, name, amount)
-    Wait(1000)
+    Wait(2500)
     exports["npwd"]:createSystemNotification({
         uniqId = "Pu_billing_paid",
         content = "Bill paid by".." "..name.." ".."at".." "..job.." ".."for".." ".."$"..amount,
