@@ -1,5 +1,5 @@
 RegisterNetEvent('pu_billing:server:payment', function(biller, amount, job, billername, billed, buyer)
-    local buyer2 = exports.core:GetPlayer(source)
+    local buyer2 = exports.qbx_core:GetPlayer(source)
     local buyname = buyer.charinfo.firstname.." ".. buyer.charinfo.lastname
     if not buyer2.Functions.RemoveMoney('bank', amount, job.." "..billername) then
         return exports.core:Notify(source, 'Not enough money', 'error')

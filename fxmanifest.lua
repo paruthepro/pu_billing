@@ -8,7 +8,7 @@ description 'A generic Ox Lib based Billing resource created by Paru.'
 version '1.0'
 
 shared_scripts {
-    '@core/modules/playerdata.lua',
+    '@qbx_core/modules/playerdata.lua',
 	'@ox_lib/init.lua',
 	'config.lua'
 }
