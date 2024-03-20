@@ -5,7 +5,7 @@ lua54 'yes'
 
 author 'Paru'
 description 'A generic Ox Lib based Billing resource created by Paru.'
-version '1.1'
+version '1.2'
 
 shared_scripts {
     '@qbx_core/modules/playerdata.lua',
