@@ -55,6 +55,18 @@ RegisterNetEvent('pu_billing:client:receiveBillResponse', function(accepted, nam
             controls = false,
         })
     else
+        if accepted then
+            lib.alertDialog({
+                header = 'Billing Portal',
+                content = ('The bill sent to %s has been accepted  \n Total Cost: $%s'):format(name, amount),
+                centered = true,
+                cancel = true,
+                labels = {
+                    cancel = 'Rebill',
+                    confirm = 'Close'
+                }
+            })
+        else
         local bill = lib.alertDialog({
             header = 'Billing Portal',
             content = ('The bill sent to'.." "..name.." "..'has been cancelled'..'\n Total Cost: '..""..amount):format(amount),
@@ -69,4 +81,5 @@ RegisterNetEvent('pu_billing:client:receiveBillResponse', function(accepted, nam
             TriggerEvent('pu_billing:client:bill')
         end
     end
+end
 end)
