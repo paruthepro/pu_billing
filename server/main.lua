@@ -1,5 +1,4 @@
 local waitingBills = {}
-
 RegisterNetEvent("pu_billing:server:sendBill", function(target, amount)
     target = tonumber(target)
     amount = tonumber(amount)
@@ -35,8 +34,16 @@ RegisterNetEvent("pu_billing:server:reply", function(token, accepted)
             exports.qbx_core:Notify(source, "Not enough money", "error")
             accepted = false
         else
-            exports['Renewed-Banking']:handleTransaction(target.PlayerData.citizenid, 'Personal Account'.." / "..target.PlayerData.citizenid, bill.amount, bill.job.." - "..bill.name, bill.job, bill.job, 'withdraw')
-            exports['Renewed-Banking']:handleTransaction(bill.job, bill.job, bill.amount, bill.job, bill.name, bill.job, 'deposit')
+            if Config.Banking == 'qbx' then
+                exports['Renewed-Banking']:handleTransaction(target.PlayerData.citizenid, 'Personal Account'.." / "..target.PlayerData.citizenid, bill.amount, bill.job.." - "..bill.name, bill.job, bill.job, 'withdraw')
+                exports['Renewed-Banking']:handleTransaction(bill.job, bill.job, bill.amount, bill.job.."-"..target.PlayerData.charinfo.firstname.." "..target.PlayerData.charinfo.lastname, target.PlayerData.charinfo.firstname.." "..target.PlayerData.charinfo.lastname, bill.job, 'deposit')
+            -- exports['Renewed-Banking']:handleTransaction(account, title, amount, message, issuer, receiver, type)
+            elseif Config.Banking == 'pefcl' then
+                exports.pefcl:removeBankBalance(target, { amount = bill.amount, message = bill.job.." - "..bill.name })
+                exports.pefcl:addBankBalance(bill.job, { amount = bill.amount, message = bill.job.." - "..target.PlayerData.charinfo.firstname.." "..target.PlayerData.charinfo.lastname })
+            elseif Config.Banking == 'custom' then
+
+            end
         end
     end
     TriggerClientEvent("pu_billing:client:receiveBillResponse", bill.from, accepted, bill.name, bill.job, bill.amount)
