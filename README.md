@@ -1,7 +1,12 @@
 # QBX Billing
-A fresh new outlook on job/shop billing utilising NPWD and QBX_Core as well as Renewed Banking!
+A universal billing resource for FiveM RP Servers that utilises the following resources
 
-Credit to Ceeb [https://github.com/CeebDev] for fixing my fuck ups!
+## Dependencies
+ox_lib[https://github.com/overextended/ox_lib]
+Framework (For grabbing player info/data)[https://github.com/Qbox-project/qbx_core]
+NPWD[https://github.com/project-error/npwd]
+
+Credit to Ceeb[https://github.com/CeebDev] for fixing my fuck ups!
 
 https://i.imgur.com/QRyleYn.png
 https://i.imgur.com/OAzKgMJ.png
