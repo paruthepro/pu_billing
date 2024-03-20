@@ -7,13 +7,13 @@ RegisterNetEvent("pu_billing:server:sendBill", function(target, amount)
     if not amount or amount <= 0 then return end
 
     local token = ("%s_%s"):format(target, os.time())
-    local player = exports.qbx_core:GetPlayer(source)
-    if not player.PlayerData.job.onduty then return end
-    local job = player.PlayerData.job.name
+    local player = exports.qbx_core:GetPlayer(source) -- Modify this for your own framework (if QBX leave it)
+    if not player.PlayerData.job.onduty then return end -- Modify this for your own framework (if QBX leave it)
+    local job = player.PlayerData.job.name -- Modify this for your own framework (if QBX leave it)
     if job == "unemployed" then return end
     
-    local targetPlayer = exports.qbx_core:GetPlayer(source)
-    local name = ("%s %s"):format(targetPlayer.PlayerData.charinfo.firstname, targetPlayer.PlayerData.charinfo.lastname)
+    local targetPlayer = exports.qbx_core:GetPlayer(source) -- Modify this for your own framework
+    local name = ("%s %s"):format(targetPlayer.PlayerData.charinfo.firstname, targetPlayer.PlayerData.charinfo.lastname) -- Modify this for your own framework (if QBX/QB leave it)
     waitingBills[token] = {
         amount = amount,
         from = source,
@@ -28,21 +28,23 @@ RegisterNetEvent("pu_billing:server:reply", function(token, accepted)
     local bill = waitingBills[token]
     if not bill then return end
     if accepted then
-        local target = exports.qbx_core:GetPlayer(source)
-        local targetBalance = target.Functions.GetMoney('bank')
+        local target = exports.qbx_core:GetPlayer(source) -- Modify this for your own framework (if QBX leave it)
+        local targetBalance = target.Functions.GetMoney('bank') -- Modify this for your own framework (if QBX/QB leave it)
         if targetBalance < bill.amount then
-            exports.qbx_core:Notify(source, "Not enough money", "error")
+            exports.qbx_core:Notify(source, "Not enough money", "error") -- Modify this for your own notifications (if QBX leave it)
             accepted = false
         else
-            if Config.Banking == 'qbx' then
+            if Config.Framework == 'qbx' then
+                if not exports['Renewed-Banking']:removeAccountMoney(target, bill.amount) then return end
                 exports['Renewed-Banking']:handleTransaction(target.PlayerData.citizenid, 'Personal Account'.." / "..target.PlayerData.citizenid, bill.amount, bill.job.." - "..bill.name, bill.job, bill.job, 'withdraw')
+                exports['Renewed-Banking']:addAccountMoney(bill.job, bill.amount)
                 exports['Renewed-Banking']:handleTransaction(bill.job, bill.job, bill.amount, bill.job.."-"..target.PlayerData.charinfo.firstname.." "..target.PlayerData.charinfo.lastname, target.PlayerData.charinfo.firstname.." "..target.PlayerData.charinfo.lastname, bill.job, 'deposit')
             -- exports['Renewed-Banking']:handleTransaction(account, title, amount, message, issuer, receiver, type)
-            elseif Config.Banking == 'pefcl' then
-                exports.pefcl:removeBankBalance(target, { amount = bill.amount, message = bill.job.." - "..bill.name })
+            elseif Config.Framework == 'pefcl' then
+                if not exports.pefcl:removeBankBalance(target, { amount = bill.amount, message = bill.job.." - "..bill.name }) then return end
                 exports.pefcl:addBankBalance(bill.job, { amount = bill.amount, message = bill.job.." - "..target.PlayerData.charinfo.firstname.." "..target.PlayerData.charinfo.lastname })
             elseif Config.Banking == 'custom' then
-
+                BankingTransactions(bill)
             end
         end
     end
