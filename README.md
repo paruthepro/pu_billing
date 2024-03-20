@@ -1,4 +1,4 @@
-# QBX Billing
+# PU Billing
 A universal billing resource for FiveM RP Servers that utilises the following resources
 
 ## Dependencies
