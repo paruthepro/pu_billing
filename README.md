@@ -2,12 +2,12 @@
 A universal billing resource for FiveM RP Servers that utilises the following resources
 
 ## Dependencies
-ox_lib[https://github.com/overextended/ox_lib]
-Framework (For grabbing player info/data)[https://github.com/Qbox-project/qbx_core]
-NPWD[https://github.com/project-error/npwd]
+[ox_lib](https://github.com/overextended/ox_lib)
+[Framework](https://github.com/Qbox-project/qbx_core) (For grabbing player info/data)
+[NPWD](https://github.com/project-error/npwd) Or other phone resource for notifications
 
-Credit to Ceeb[https://github.com/CeebDev] for fixing my fuck ups!
+Credit to [Ceeb](https://github.com/CeebDev) for fixing my fuck ups!
 
-https://i.imgur.com/QRyleYn.png
-https://i.imgur.com/OAzKgMJ.png
-https://i.imgur.com/tXyYzu7.png
+[https://i.imgur.com/QRyleYn.png]
+[https://i.imgur.com/OAzKgMJ.png]
+[https://i.imgur.com/tXyYzu7.png]
