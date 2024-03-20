@@ -35,15 +35,14 @@ RegisterNetEvent("pu_billing:server:reply", function(token, accepted)
             accepted = false
         else
             if Config.Framework == 'qbx' then
-                if not exports['Renewed-Banking']:removeAccountMoney(target, bill.amount) then return end
                 exports['Renewed-Banking']:handleTransaction(target.PlayerData.citizenid, 'Personal Account'.." / "..target.PlayerData.citizenid, bill.amount, bill.job.." - "..bill.name, bill.job, bill.job, 'withdraw')
-                exports['Renewed-Banking']:addAccountMoney(bill.job, bill.amount)
+                target.Functions.RemoveMoney('bank', bill.amount)
                 exports['Renewed-Banking']:handleTransaction(bill.job, bill.job, bill.amount, bill.job.."-"..target.PlayerData.charinfo.firstname.." "..target.PlayerData.charinfo.lastname, target.PlayerData.charinfo.firstname.." "..target.PlayerData.charinfo.lastname, bill.job, 'deposit')
-            -- exports['Renewed-Banking']:handleTransaction(account, title, amount, message, issuer, receiver, type)
+                exports['Renewed-Banking']:addAccountMoney(bill.job, bill.amount)
             elseif Config.Framework == 'pefcl' then
                 if not exports.pefcl:removeBankBalance(target, { amount = bill.amount, message = bill.job.." - "..bill.name }) then return end
                 exports.pefcl:addBankBalance(bill.job, { amount = bill.amount, message = bill.job.." - "..target.PlayerData.charinfo.firstname.." "..target.PlayerData.charinfo.lastname })
-            elseif Config.Banking == 'custom' then
+            elseif Config.Framework == 'custom' then
                 BankingTransactions(bill)
             end
         end

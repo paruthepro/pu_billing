@@ -10,7 +10,7 @@ RegisterNetEvent('pu_billing:client:bill', function()
 end)
 
 RegisterNetEvent('pu_billing:client:receiveBill', function(amount, job, token)
-    if Config.NPWD then
+    if Config.Phone == "true" then
         exports["npwd"]:createSystemNotification({
             uniqId = "Pu_billing",
             content = ("Do you accept the bill? ($%s)"):format(amount),
@@ -25,7 +25,7 @@ RegisterNetEvent('pu_billing:client:receiveBill', function(amount, job, token)
             TriggerServerEvent("pu_billing:server:reply", token, false)
             end,
         })
-    else
+    elseif Config.Phone == "false" then
         local bill = lib.alertDialog({
             header = 'Billing Portal',
             content = ('Do you accept the bill? ($%s)\n From'.." "..job):format(amount),
@@ -45,7 +45,7 @@ RegisterNetEvent('pu_billing:client:receiveBill', function(amount, job, token)
 end)
 
 RegisterNetEvent('pu_billing:client:receiveBillResponse', function(accepted, name, job, amount)
-    if Config.NPWD then
+    if Config.Phone == "true" then
         exports["npwd"]:createSystemNotification({
             uniqId = accepted and "Pu_billing_paid" or "Pu_billing_rejected",
             content = accepted and ("Bill paid by %s at %s for $%s"):format(name, job, amount) or ("Bill rejected by %s"):format(name),
@@ -54,18 +54,21 @@ RegisterNetEvent('pu_billing:client:receiveBillResponse', function(accepted, nam
             duration = Config.NotificationLength,
             controls = false,
         })
-    else
+    elseif Config.Phone == "false" then
         if accepted then
-            lib.alertDialog({
+            local bill = lib.alertDialog({
                 header = 'Billing Portal',
                 content = ('The bill sent to %s has been accepted  \n Total Cost: $%s'):format(name, amount),
                 centered = true,
                 cancel = true,
                 labels = {
-                    cancel = 'Rebill',
+                    cancel = 'New Bill',
                     confirm = 'Close'
                 }
             })
+            if bill == 'cancel' then
+                TriggerEvent('pu_billing:client:bill')
+            end
         else
         local bill = lib.alertDialog({
             header = 'Billing Portal',
