@@ -5,7 +5,7 @@ RegisterNetEvent('pu_billing:client:bill', function()
         if not input then return end
         TriggerServerEvent('pu_billing:server:sendBill', input[1], input[2])
     else
-        exports.core:Notify('You must be on duty to do that!', 'ban')
+        exports.qbx_core:Notify('You must be on duty to do that!', 'ban')
     end
 end)
 
