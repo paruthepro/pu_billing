@@ -15,5 +15,5 @@ Credit to [Ceeb](https://github.com/CeebDev) for fixing my fuck ups!
 [https://i.imgur.com/tXyYzu7.png]
 
 ## Planned
-ox_core support
+ox_core support <br>
 ox_banking support
