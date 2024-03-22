@@ -1,5 +1,7 @@
 # PU Billing
-A universal billing resource for FiveM RP Servers that utilises the following resources
+A universal billing resource for FiveM RP Servers
+
+Utilising functionality from ox_lib or NPWD we're able to live send bills to players simply by triggering the event, the money is then deposited into the respective core job account (or in the case of PEFCL, it's deposited into an account named after the job)
 
 ## Dependencies
 [ox_lib](https://github.com/overextended/ox_lib) <br>
